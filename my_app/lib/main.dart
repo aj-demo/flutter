@@ -21,6 +21,15 @@ class AppState extends State<App> {
       setState(() => _currentTab = tabItem);
     }
   }
+  ///主体内容
+  Widget _body() => PageView.builder(
+    // onPageChanged: _onPageChanged,
+    // controller: _pageController,
+    itemBuilder: (BuildContext context, int index) {
+      return pages[_currentTab];
+    },
+    itemCount: 3,
+  );
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -31,13 +40,7 @@ class AppState extends State<App> {
       home: new Scaffold(
         backgroundColor: Colors.white,
         appBar: new AjAppBar(),
-        body: new Center(
-          child: new Column(
-            children: [
-              
-            ]
-          ),
-        ),
+        body: _body(),
         floatingActionButton: new AjDialog(),
         drawer: Drawer(
           child: Center(
@@ -52,3 +55,20 @@ class AppState extends State<App> {
     );
   }
 }
+Map<TabItem, PageView> pages = {
+  TabItem.home: new PageView(
+    children: <Widget> [
+      Text('首页')
+    ]
+  ),
+  TabItem.cart: new PageView(
+    children: <Widget> [
+      Text('购物车')
+    ]
+  ),
+  TabItem.setting: new PageView(
+    children: <Widget> [
+      Text('设置')
+    ]
+  ),
+};
