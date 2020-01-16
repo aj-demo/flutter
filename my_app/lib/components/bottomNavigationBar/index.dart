@@ -8,32 +8,37 @@
 
 import 'package:flutter/material.dart';
 
-enum TabItem { home, cart, setting }
+List<Map> appBottomTabs = const [
+  {
+    'key': 'home',
+    'name': '首页',
+    'color': Colors.red,
+    'icon': Icons.home
+  },
+  {
+    'key': 'cart',
+    'name': '购物车',
+    'color': Colors.green,
+    'icon': Icons.shopping_cart
+  },
+  {
+    'key': 'setting',
+    'name': '设置',
+    'color': Colors.blue,
+    'icon': Icons.settings
+  }
+];
 
-Map<TabItem, String> tabNames = {
-  TabItem.home: '首页',
-  TabItem.cart: '购物车',
-  TabItem.setting: '设置',
-};
-Map<TabItem, MaterialColor> tabColors = {
-  TabItem.home: Colors.red,
-  TabItem.cart: Colors.green,
-  TabItem.setting: Colors.blue,
-};
-Map<TabItem, IconData> tabIcons = {
-  TabItem.home: Icons.home,
-  TabItem.cart:  Icons.shopping_cart,
-  TabItem.setting: Icons.settings,
-};
 // ignore: must_be_immutable
 class AjBottomNavigationBar extends StatelessWidget {
 
   AjBottomNavigationBar({this.currentTab, this.onSelectTab});
-  TabItem currentTab;
-  final ValueChanged<TabItem> onSelectTab;
+  int currentTab;
+  final ValueChanged<int> onSelectTab;
   void _onTap (index) {
+    print(appBottomTabs[index]['key']);
     onSelectTab(
-      TabItem.values[index],
+      index,
     );
   }
   @override
@@ -48,27 +53,29 @@ class AjBottomNavigationBar extends StatelessWidget {
     );
   }
   List<BottomNavigationBarItem> _buildItems() {
+    return appBottomTabs.map(_buidItem)
     return [
-      _buidItem(tabItem: TabItem.home),
-      _buidItem(tabItem: TabItem.cart),
-      _buidItem(tabItem: TabItem.setting),
+      _buidItem(index: 0),
+      _buidItem(index: 1),
+      _buidItem(index: 2),
     ];
   }
-  BottomNavigationBarItem _buidItem({TabItem tabItem}) {
+  BottomNavigationBarItem _buidItem({int index}) {
+    var tabItem = appBottomTabs[index];
     return BottomNavigationBarItem(
       icon: Icon(
-        tabIcons[tabItem],
-        color: _getTabColor(tabItem),
+        tabItem['icon'],
+        color: _getTabColor(index, tabItem),
       ),
       title: Text(
-        tabNames[tabItem],
+        tabItem['name'],
         style: TextStyle(
-          color: _getTabColor(tabItem),
+          color: _getTabColor(index, tabItem),
         )
       ),
     );
   }
-  Color _getTabColor(tabItem) {
-    return tabItem == this.currentTab ? tabColors[tabItem] : Colors.grey;
+  Color _getTabColor(index, tabItem) {
+    return index == this.currentTab ? tabItem['color'] : Colors.grey;
   }
 }

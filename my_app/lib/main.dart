@@ -14,8 +14,8 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  TabItem _currentTab = TabItem.home;
-  void _selectTab(TabItem tabItem) {
+  int _currentTab = 0;
+  void _selectTab(int tabItem) {
     if (tabItem == _currentTab) {
     } else {
       setState(() => _currentTab = tabItem);
@@ -55,20 +55,20 @@ class AppState extends State<App> {
     );
   }
 }
-Map<TabItem, PageView> pages = {
-  TabItem.home: new PageView(
+List pages = [
+  new PageView(
     children: <Widget> [
       Text('首页')
     ]
   ),
-  TabItem.cart: new PageView(
+  new PageView(
     children: <Widget> [
       Text('购物车')
     ]
   ),
-  TabItem.setting: new PageView(
+  new PageView(
     children: <Widget> [
       Text('设置')
     ]
-  ),
-};
+  )
+];

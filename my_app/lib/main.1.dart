@@ -29,11 +29,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   _initFluwx() async {
-    await fluwx.register(
-        appId: "wxd930ea5d5a258f4f",
-        doOnAndroid: true,
-        doOnIOS: true,
-        enableMTA: false);
+    // await fluwx.register(
+    //     appId: "wxd930ea5d5a258f4f",
+    //     doOnAndroid: true,
+    //     doOnIOS: true,
+    //     enableMTA: false);
     var result = await fluwx.isWeChatInstalled();
     print("is installed $result");
   }
