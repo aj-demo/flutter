@@ -36,7 +36,6 @@ class AjBottomNavigationBar extends StatelessWidget {
   int currentTab;
   final ValueChanged<int> onSelectTab;
   void _onTap (index) {
-    print(appBottomTabs[index]['key']);
     onSelectTab(
       index,
     );
@@ -53,29 +52,25 @@ class AjBottomNavigationBar extends StatelessWidget {
     );
   }
   List<BottomNavigationBarItem> _buildItems() {
-    return appBottomTabs.map(_buidItem)
-    return [
-      _buidItem(index: 0),
-      _buidItem(index: 1),
-      _buidItem(index: 2),
-    ];
+    List<BottomNavigationBarItem> res = [];
+    appBottomTabs.forEach((f) => res.add(_buidItem(f)));
+    return res;
   }
-  BottomNavigationBarItem _buidItem({int index}) {
-    var tabItem = appBottomTabs[index];
+  BottomNavigationBarItem _buidItem(tabItem) {
     return BottomNavigationBarItem(
       icon: Icon(
         tabItem['icon'],
-        color: _getTabColor(index, tabItem),
+        color: _getTabColor(tabItem),
       ),
       title: Text(
         tabItem['name'],
         style: TextStyle(
-          color: _getTabColor(index, tabItem),
+          color: _getTabColor(tabItem),
         )
       ),
     );
   }
-  Color _getTabColor(index, tabItem) {
-    return index == this.currentTab ? tabItem['color'] : Colors.grey;
+  Color _getTabColor(tabItem) {
+    return appBottomTabs.indexOf(tabItem) == this.currentTab ? tabItem['color'] : Colors.grey;
   }
 }

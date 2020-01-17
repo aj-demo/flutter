@@ -3,7 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:my_app/components/appBar/index.dart';
 import 'package:my_app/components/dialog/index.dart';
 import 'package:my_app/components/bottomNavigationBar/index.dart';
-// import './pages/home/index.dart';
+
+import './pages/home/index.dart';
+import './pages/setting/setting.dart';
+import './pages/cart/cart.dart';
 
 // void main() => runApp(new PageHome());
 void main() => runApp(new App());
@@ -13,23 +16,20 @@ class App extends StatefulWidget {
   State<StatefulWidget> createState() => AppState();
 }
 
+List<Widget> pages = [
+  new PageHome(),
+  new PageCart(),
+  new PageSetting()
+];
+
 class AppState extends State<App> {
-  int _currentTab = 0;
-  void _selectTab(int tabItem) {
-    if (tabItem == _currentTab) {
+  int _pageIndex = 0;
+  void _changePage(int index) {
+    if (index == _pageIndex) {
     } else {
-      setState(() => _currentTab = tabItem);
+      setState(() => _pageIndex = index);
     }
   }
-  ///主体内容
-  Widget _body() => PageView.builder(
-    // onPageChanged: _onPageChanged,
-    // controller: _pageController,
-    itemBuilder: (BuildContext context, int index) {
-      return pages[_currentTab];
-    },
-    itemCount: 3,
-  );
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -40,7 +40,10 @@ class AppState extends State<App> {
       home: new Scaffold(
         backgroundColor: Colors.white,
         appBar: new AjAppBar(),
-        body: _body(),
+        body: IndexedStack(
+          index: _pageIndex,
+          children: pages,
+        ),
         floatingActionButton: new AjDialog(),
         drawer: Drawer(
           child: Center(
@@ -48,27 +51,10 @@ class AppState extends State<App> {
           ),
         ),
         bottomNavigationBar: new AjBottomNavigationBar(
-          currentTab: _currentTab,
-          onSelectTab: _selectTab,
+          currentTab: _pageIndex,
+          onSelectTab: _changePage,
         ),
       ),
     );
   }
 }
-List pages = [
-  new PageView(
-    children: <Widget> [
-      Text('首页')
-    ]
-  ),
-  new PageView(
-    children: <Widget> [
-      Text('购物车')
-    ]
-  ),
-  new PageView(
-    children: <Widget> [
-      Text('设置')
-    ]
-  )
-];

@@ -2,18 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:my_app/components/appBar/index.dart';
-import 'package:my_app/components/dialog/index.dart';
-// import 'package:my_app/components/bottomNavigationBar/index.dart';
+import './next.dart';
 
-// ignore: must_be_immutable
-class PageHome extends StatelessWidget {
-  // int _currentTab = 0;
-  // void _selectTab(int index) {
-  //   // setState(() => _currentTab = index);
-  // }
+class PageHome extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => PageHomeState();
+}
+class PageHomeState extends State with AutomaticKeepAliveClientMixin  {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return new MaterialApp(
       title: 'Welcome to Flutter',
       theme: new ThemeData(
@@ -21,25 +21,60 @@ class PageHome extends StatelessWidget {
       ),
       home: new Scaffold(
         backgroundColor: Colors.white,
-        appBar: new AjAppBar(),
-        body: new Center(
+        body: SingleChildScrollView(
           child: new Column(
-            children: [
-              
+            children: <Widget>[
+              Text('homePage'),
+              IconButton(
+                onPressed: () => gotoNext(context),
+                icon: Icon(Icons.warning)
+              ),
+              Tee()
             ]
           ),
         ),
-        floatingActionButton: new AjDialog(),
-        drawer: Drawer(
-          child: Center(
-            child: Text('Drawer'),
-          ),
-        ),
-        // bottomNavigationBar: new AjBottomNavigationBar(
-        //   currentTab: _currentTab,
-        //   onSelectTab: _selectTab,
-        // ),
       ),
+    );
+  }
+  void gotoNext (BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PageHomeNext();
+    }));
+  }
+}
+
+class Tee extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => TeeState();
+}
+class  TeeState extends State with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+  int i = 0;
+  void cI () {
+    setState(() => i = i + 1);
+  }
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    // print(this == context);
+    return Column(
+      children: <Widget>[
+        Text(
+          'id' + i.toString()
+        ),
+        IconButton(
+          onPressed: cI,
+          icon: Icon(Icons.warning)
+        ),
+        Container(
+          width: 1000,
+          height: 2000,
+          child: Text(
+            'ididididididididididididid'
+          )
+        )
+      ],
     );
   }
 }
