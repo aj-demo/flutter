@@ -9,7 +9,9 @@ import './pages/setting/setting.dart';
 import './pages/cart/cart.dart';
 
 // void main() => runApp(new PageHome());
-void main() => runApp(new App());
+void main() {
+  runApp(new App());
+}
 
 class App extends StatefulWidget {
   @override

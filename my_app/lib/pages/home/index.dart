@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import './next.dart';
+import '../../apis/apis.dart';
 
 class PageHome extends StatefulWidget {
   @override
@@ -54,6 +55,12 @@ class  TeeState extends State with AutomaticKeepAliveClientMixin {
   void cI () {
     setState(() => i = i + 1);
   }
+  initState() {
+    super.initState();
+    getLogininfo().then((data) {
+      print(data);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -67,13 +74,18 @@ class  TeeState extends State with AutomaticKeepAliveClientMixin {
           onPressed: cI,
           icon: Icon(Icons.warning)
         ),
-        Container(
-          width: 1000,
-          height: 2000,
-          child: Text(
-            'ididididididididididididid'
-          )
-        )
+        // Container(
+        //   width: 1000,
+        //   height: 2000,
+        //   child: FutureBuilder<dynamic>(
+        //     future: getLogininfo,
+        //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //       return Text(
+        //         'ididididididididididididid'
+        //       );
+        //     }
+        //   )
+        // )
       ],
     );
   }
