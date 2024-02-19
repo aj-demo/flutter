@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class PageCenter extends StatefulWidget {
-  const PageCenter({super.key, required this.title});
+  const PageCenter({super.key, required this.title, this.color = Colors.black});
 
   final String title;
+  final Color color;
 
   @override
   State<PageCenter> createState() => PageCenterState();
@@ -34,16 +35,19 @@ class PageCenterState extends State<PageCenter> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(
-            onPressed: _getBatteryLevel,
-            child: const Text('Get Battery Level'),
-          ),
-          Text(_batteryLevel),
-        ],
+    return Container(
+      decoration: BoxDecoration(color: widget.color),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: _getBatteryLevel,
+              child: const Text('Get Battery Level'),
+            ),
+            Text(_batteryLevel),
+          ],
+        ),
       ),
     );
   }

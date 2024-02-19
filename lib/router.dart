@@ -12,31 +12,54 @@ final router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-                name: 'home',
-                path: '/',
-                builder: (context, state) => const MyHomePage(title: 'okay'),
+              name: 'home',
+              path: '/',
+              builder: (context, state) => const MyHomePage(title: 'okay', color: Colors.brown),
             ),
             GoRoute(
               name: 'recommend',
               path: '/recommend',
-              builder: (context, state) => const MyHomePage(title: 'recommend'),
+              builder: (context, state) => const MyHomePage(title: 'recommend', color: Colors.lightBlueAccent),
             ),
             GoRoute(
               name: 'contact',
               path: '/contact',
-              builder: (context, state) => const MyHomePage(title: 'contact'),
+              builder: (context, state) => const MyHomePage(title: 'contact', color: Colors.green),
             ),
             GoRoute(
               name: 'center',
               path: '/center',
-              builder: (context, state) => const PageCenter(title: 'center'),
+              builder: (context, state) => const PageCenter(title: 'center', color: Colors.greenAccent),
             ),
           ]
         )
       ],
-      builder: (context, state, navigationShell) {
-        return BaseLayout(child: navigationShell);
-      },
+      // builder: (context, state, navigationShell) {
+      //   return BaseLayout(child: navigationShell);
+      // },
+      pageBuilder: (context, state, shell) {
+        return CustomTransitionPage(
+          child: BaseLayout(child: shell),
+          opaque: true,
+          transitionDuration: const Duration(milliseconds: 100),
+          transitionsBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child) {
+
+            const begin = Offset(0.0, 1.0);
+            const end = Offset.zero;
+            final tween = Tween(begin: begin, end: end);
+            final offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          },
+        );
+      }
     ),
   ],
 );

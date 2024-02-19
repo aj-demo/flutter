@@ -44,18 +44,25 @@ class _MyHomePageState extends State<BaseLayout> {
   }
   @override
   Widget build(BuildContext context) {
+
     var data = GoRouterState.of(context);
-    int index = _menus.indexWhere((element) => element.key == data.name);
+    int index = _menus.indexWhere((element) => element.key == data.topRoute?.name);
     // if (index == -1) {
     //   _onTap(0);
     // }
     return Scaffold(
       body: Center(
-        child: widget.child,
+        child: Container(
+          decoration: const BoxDecoration(color: Colors.blue),
+          child: widget.child,
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index + 1,
+        currentIndex: index,
         onTap: _onTap,
+        showUnselectedLabels: true,
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
         selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.blueGrey,
         items: _menus.map((menu) =>

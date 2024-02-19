@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, this.color = Colors.black});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -14,9 +14,12 @@ class MyHomePage extends StatelessWidget {
   // always marked "final".
 
   final String title;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return Text(title);
+    return Center(
+      child: Text(title),
+    );
   }
 }
