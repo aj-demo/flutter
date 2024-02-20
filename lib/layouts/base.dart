@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import './widget/CustomBottomNavigationBar.dart';
 
 class BaseLayout extends StatefulWidget {
   const BaseLayout({super.key, required this.navigationShell});
@@ -32,25 +33,34 @@ class _MyHomePageState extends State<BaseLayout> {
       initialLocation: index == widget.navigationShell.currentIndex,
     );
   }
+  Widget getCustomBottomNavigationBar() {
+    return CustomBottomBar(
+      value: widget.navigationShell.currentIndex,
+      onChange: _onTap,
+    );
+  }
+  Widget getBottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: widget.navigationShell.currentIndex,
+      onTap: _onTap,
+      showUnselectedLabels: true,
+      selectedFontSize: 12,
+      unselectedFontSize: 12,
+      selectedItemColor: Colors.blueAccent,
+      unselectedItemColor: Colors.blueGrey,
+      items: _menus.map((menu) =>
+          BottomNavigationBarItem(
+            label: menu.label,
+            icon: menu.icon,
+          ),
+      ).toList(),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: widget.navigationShell.currentIndex,
-        onTap: _onTap,
-        showUnselectedLabels: true,
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.blueGrey,
-        items: _menus.map((menu) =>
-            BottomNavigationBarItem(
-              label: menu.label,
-              icon: menu.icon,
-            ),
-        ).toList(),
-      )
+      bottomNavigationBar: getCustomBottomNavigationBar(),
     );
   }
 }
