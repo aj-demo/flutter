@@ -69,6 +69,7 @@ class CustomBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mq = MediaQuery.of(context);
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -79,12 +80,16 @@ class CustomBottomBar extends StatelessWidget {
         ),
         color: Colors.white54,
       ),
-      height: 48,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: getList(),
-      ),
+      height: 54 + mq.padding.bottom,
+      child: SizedBox(
+        height: 54,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: getList(),
+        ),,
+      )
     );
   }
 }
