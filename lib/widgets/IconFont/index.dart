@@ -3,18 +3,30 @@ import 'package:flutter/material.dart';
 
 class IconFont extends StatelessWidget {
 
-  final String data;
-  TextStyle style;
-  IconFont(this.data, {
-    super.key,
-    this.style = const TextStyle(),
-  });
+    final String data;
+    final double? fontSize;
+    final Color? color;
+    final double? height;
 
-  @override
-  Widget build(BuildContext context)  {
-    return Text(
-        data,
-        style: const TextStyle(fontFamily: 'IconFont'),
-    );
-  }
+    const IconFont(this.data, {
+      super.key,
+      this.fontSize,
+      this.color,
+      this.height,
+    });
+
+    @override
+    Widget build(BuildContext context)  {
+      return Text(
+          data,
+          style: TextStyle(
+            color: color,
+            fontSize: fontSize,
+            height: height,
+            fontFamily: 'IconFont',
+          ),
+      );
+    }
+    static const String home = '\uE7d5';
+    static const String homeFill = '\uE7da';
 }
