@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import './layouts/base.dart';
 import './views/home/index.dart';
 import './views/center/index.dart';
+import './views/login/index.dart';
 
 final router = GoRouter(
   routes: [
@@ -72,6 +73,11 @@ final router = GoRouter(
       //     },
       //   );
       // }
+    ),
+    GoRoute(
+      name: 'login',
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
     ),
   ],
 );

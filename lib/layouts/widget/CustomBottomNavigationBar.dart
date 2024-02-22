@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import '../../helper/icons/CustomIcons.dart';
-import '../../widgets/IconFont/index.dart';
 
 class CustomBottomBarItem extends StatelessWidget {
     const CustomBottomBarItem({
