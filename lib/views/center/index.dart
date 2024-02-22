@@ -19,19 +19,22 @@ class PageCenterState extends State<PageCenter> {
   static const platform = MethodChannel('jade.flutter.dev/battery');
 
   Future<void> _getBatteryLevel() async {
+    String batteryLevel;
+    try {
+      final result = await platform.invokeMethod<int>('getBatteryLevel');
+      batteryLevel = 'Battery level at $result % .';
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
+  void gotoLogin() {
     GoRouter rout = GoRouter.of(context);
-    rout.pushNamed("login");
-    // String batteryLevel;
-    // try {
-    //   final result = await platform.invokeMethod<int>('getBatteryLevel');
-    //   batteryLevel = 'Battery level at $result % .';
-    // } on PlatformException catch (e) {
-    //   batteryLevel = "Failed to get battery level: '${e.message}'.";
-    // }
-    //
-    // setState(() {
-    //   _batteryLevel = batteryLevel;
-    // });
+    // rout.pushNamed("login");
+    rout.goNamed("login");
   }
 
   @override
@@ -47,6 +50,10 @@ class PageCenterState extends State<PageCenter> {
               child: const Text('Get Battery Level'),
             ),
             Text(_batteryLevel),
+            ElevatedButton(
+              onPressed: gotoLogin,
+              child: const Text('gotoLogin'),
+            ),
           ],
         ),
       ),

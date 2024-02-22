@@ -87,7 +87,7 @@ class CustomBottomBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: getList(),
-        ),,
+        ),
       )
     );
   }

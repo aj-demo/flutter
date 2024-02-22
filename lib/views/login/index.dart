@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../helper/login/LoginHelper.dart';
 
 
@@ -13,9 +14,16 @@ class LoginPageState extends State<LoginPage> {
   late Future<bool> login;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    login = LoginHelper().isLogin();
+    login = LoginHelper.isLogin();
+  }
+  void onPressed() {
+    GoRouter gr = GoRouter.of(context);
+    LoginHelper.isLogin().then((value) {
+      gr.goNamed('home');
+      // gr.pop();
+      // gr.pushNamed('home');
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.all(16),
       child: Center(
         child: FutureBuilder(future: login, builder: (context, snapshot) {
-          return Text(snapshot.data == true ? 'ok' : 'false');
+          return ElevatedButton(onPressed: onPressed, child: Text(snapshot.data != null ? 'ok' : 'err'));
         }),
       ),
     );

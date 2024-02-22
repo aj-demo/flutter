@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import './layouts/base.dart';
@@ -10,42 +9,38 @@ final router = GoRouter(
   routes: [
     StatefulShellRoute.indexedStack(
       branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              name: 'home',
-              path: '/',
-              builder: (context, state) => const MyHomePage(title: 'okay', color: Colors.brown),
-            ),
-          ]
-        ),
-        StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: 'recommend',
-                path: '/recommend',
-                builder: (context, state) => const MyHomePage(title: 'recommend', color: Colors.lightBlueAccent),
-              ),
-            ]
-        ),
-        StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: 'contact',
-                path: '/contact',
-                builder: (context, state) => const MyHomePage(title: 'contact', color: Colors.green),
-              ),
-            ]
-        ),
-        StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: 'center',
-                path: '/center',
-                builder: (context, state) => const PageCenter(title: 'center', color: Colors.greenAccent),
-              ),
-            ]
-        )
+        StatefulShellBranch(routes: [
+          GoRoute(
+            name: 'home',
+            path: '/',
+            builder: (context, state) =>
+                const MyHomePage(title: 'okay', color: Colors.brown),
+          ),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(
+            name: 'recommend',
+            path: '/recommend',
+            builder: (context, state) => const MyHomePage(
+                title: 'recommend', color: Colors.lightBlueAccent),
+          ),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(
+            name: 'contact',
+            path: '/contact',
+            builder: (context, state) =>
+                const MyHomePage(title: 'contact', color: Colors.green),
+          ),
+        ]),
+        StatefulShellBranch(routes: [
+          GoRoute(
+            name: 'center',
+            path: '/center',
+            builder: (context, state) =>
+                const PageCenter(title: 'center', color: Colors.greenAccent),
+          ),
+        ])
       ],
       builder: (context, state, navigationShell) {
         return BaseLayout(navigationShell: navigationShell);
