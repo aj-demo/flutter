@@ -1,13 +1,15 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/providers/auth_provider.dart';
 import 'package:go_router/go_router.dart';
-import '../model/PageTransitionsBuilder/index.dart';
+import 'package:provider/provider.dart';
 import '../layouts/base.dart';
 import '../pages/home/index.dart';
 import '../pages/setting/setting.dart';
 import '../pages/cart/cart.dart';
 import '../pages/home/next.dart';
 
+import '../pages/login/index.dart';
 
 final GlobalKey<NavigatorState> rootKey = GlobalKey();
 final GlobalKey<StatefulNavigationShellState> shellKey = GlobalKey();
@@ -17,24 +19,17 @@ final GlobalKey<NavigatorState> homeKey = GlobalKey();
 
 final appRouter = GoRouter(
   navigatorKey: rootKey,
-  // initialLocation: '/home',
   routes: [
-    StatefulShellRoute.indexedStack(
+    StatefulShellRoute(
       key: shellKey,
       parentNavigatorKey: rootKey,
-      // navigatorContainerBuilder: (BuildContext context, StatefulNavigationShell navigator, List<Widget> previousNavigators) {
-      //   // Wrap each branch navigator with the app's BaseLayout so the shell UI stays around child navigation
-      //   return BaseLayout(
-      //     navigator: navigator,
-      //     child: previousNavigators[navigator.currentIndex],
-      //   );
-      // },
-      builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
-        // Return the navigationShell produced by the StatefulShellRoute
+      navigatorContainerBuilder: (context, navigationShell, children) {
         return BaseLayout(
           navigationShell: navigationShell,
+          children: children,
         );
       },
+      builder: (context, state, navigationShell) => navigationShell,
       branches: [
         StatefulShellBranch(
           preload: true,
@@ -42,30 +37,37 @@ final appRouter = GoRouter(
             GoRoute(
               name: "home",
               path: '/',
-              pageBuilder: (context, state) {
-                return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageHome());
-              },
+              builder: (context, state) => const PageHome(),
+              // pageBuilder: (context, state) {
+              //   return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageHome());
+              // },
             ),
           ]
         ),
-        StatefulShellBranch(routes: [
-          GoRoute(
-            name: "cart",
-            path: '/cart',
-            pageBuilder: (context, state) {
-              return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageCart());
-            },
-          ),
-        ]),
-        StatefulShellBranch(routes: [
-          GoRoute(
-            name: "setting",
-            path: '/setting',
-            pageBuilder: (context, state) {
-              return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageSetting());
-            },
-          ),
-        ]),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              name: "cart",
+              path: '/cart',
+              builder: (context, state) => const PageCart(),
+              // pageBuilder: (context, state) {
+              //   return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageCart());
+              // },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              name: "setting",
+              path: '/setting',
+              builder: (context, state) => const PageSetting(),
+              // pageBuilder: (context, state) {
+              //   return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageSetting());
+              // },
+            ),
+          ],
+        ),
       ]
     ),
     ShellRoute(
@@ -76,17 +78,27 @@ final appRouter = GoRouter(
         GoRoute(
           name: "detail",
           path: '/detail',
-          pageBuilder: (context, state) {
-            return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageHomeNext());
-          },
+          builder: (context, state) => const PageHomeNext(),
+          // pageBuilder: (context, state) {
+          //   return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageHomeNext());
+          // },
+        ),
+        GoRoute(
+          name: "login",
+          path: '/login',
+          builder: (context, state) => const LoginPage(),
+          // pageBuilder: (context, state) {
+          //   return CustomPageTransitionsBuilder.getTransitionPage(context, state, LoginPage());
+          // },
         ),
       ],
     ),
   ],
   redirect: (context, state) {
-    // final goRouter = GoRouter.of(context);
-    // final stack = goRouter.routerDelegate.currentConfiguration;
-    
+    final authProvider = context.read<AuthProvider>();
+    if (!authProvider.isAuthenticated) {
+      return '/login';
+    }
     return null;
   },
   onEnter: (context, current, next, goRputer) {

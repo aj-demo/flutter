@@ -62,9 +62,9 @@ class RouterHelper {
       extra: extra,
     );
   }
-  void pop(
+  void pop({
     Map<String, dynamic>? extra,
-  ) {
+  }) {
     extra = extra ?? {};
     extra[operateTypeKey] = OperateTypeEnum.pop;
     return goRouter.pop(extra);

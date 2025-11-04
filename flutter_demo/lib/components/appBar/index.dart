@@ -39,10 +39,9 @@ class AjAppBarState extends State<AjAppBar> {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(20),
         child: Container(
-          margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
+          margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
           decoration: BoxDecoration(
             color: Colors.white,
-            
             border: Border.all(
               color: Colors.black12,
               width: 1
@@ -51,7 +50,7 @@ class AjAppBarState extends State<AjAppBar> {
           child: TextField(
             key: routerState.pageKey,
             decoration: InputDecoration(
-              hintText: "text",
+              hintText: "搜索",
             ),
             style: TextStyle(
               color: Colors.black38

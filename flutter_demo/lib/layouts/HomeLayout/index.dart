@@ -1,9 +1,7 @@
 
-
 import 'package:flutter/material.dart';
-// import 'package:flutter_demo/utils/my_router.dart';
 import 'package:go_router/go_router.dart';
-import '../components/bottomNavigationBar/index.dart';
+import 'NavigationBar.dart';
 
 class BaseLayout extends StatelessWidget {
   BaseLayout({super.key, required this.navigationShell, required this.children});
@@ -17,18 +15,20 @@ class BaseLayout extends StatelessWidget {
       backgroundColor: Colors.white,
       body: PageView.builder(
         controller: pageController,
+        physics: PageScrollPhysics(),
+        scrollBehavior: const MaterialScrollBehavior(),
+        pageSnapping: true,
         onPageChanged:(index) {
           navigationShell.goBranch(index);
         },
         itemCount: children.length,
-        // 构建每个页面
         itemBuilder: (context, index) {
           return children[index];
         }
       ),
       bottomNavigationBar: AjBottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
-        onSelectTab: (int index) {
+        onTap: (int index) {
           if (index != navigationShell.currentIndex) {
             pageController.jumpToPage(index);
             navigationShell.goBranch(index);
