@@ -6,25 +6,15 @@
  * @Last Modified Time: 2020-01-21 16:14:12
  */
 
-import '../utils/fetch.dart';
+// import 'package:flutter_demo/models/res_api.dart';
+import 'package:flutter_demo/utils/fetch.dart';
 
-Future getLogininfo ({
-  params, cancelToken, onReceiveProgress
+Future fetchLogin ({
+  data, cancelToken, onReceiveProgress
 }) async {
   return dio.post(
-    "https://www.jianshu.com/shakespeare/notes/45938563/included_collections?page=1&count=7", 
-    data: params,
-    cancelToken: cancelToken,
-    onReceiveProgress: onReceiveProgress
-  );
-}
-
-Future getBaidu ({
-  params, cancelToken, onReceiveProgress
-}) async {
-  return dio.get(
-    "https://www.baidu.com", 
-    queryParameters: params,
+    "/account/login", 
+    data: data,
     cancelToken: cancelToken,
     onReceiveProgress: onReceiveProgress
   );

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/apis/apis.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter_demo/models/user.dart';
@@ -11,7 +12,8 @@ enum AuthStatus {
   unauthenticated,
   error
 }
-final accessTokenKey = 'auth_access_token';
+final tokenKey = 'auth_token';
+final refreshTokenKey = 'auth_refresh_token';
 
 class AuthProvider with ChangeNotifier {
   // 使用 flutter_secure_storage 实例
@@ -52,11 +54,11 @@ class AuthProvider with ChangeNotifier {
 
   // 1. 检查本地 Token
   Future<void> _checkForExistingToken() async {
-    final token = await secureStorage.read(key: accessTokenKey);
+    final token = await secureStorage.read(key: tokenKey);
     if (token != null) {
       // 假设 token 有效，可以设置用户信息（这里为了简化，只设置状态）
       // 实际项目中，你可能需要用 token 获取最新的用户信息
-      _user = User(id: 0, displayName: 'Cached User', avatar: '', email: '');
+      _user = User(id: '0', displayName: 'Cached User', avatar: '', email: '');
       _authStatus = AuthStatus.authenticated;
     } else {
       _authStatus = AuthStatus.unauthenticated;
@@ -65,12 +67,17 @@ class AuthProvider with ChangeNotifier {
   }
 
   // 2. 登录方法
-  Future<void> login(String email, String password) async {
+  Future<void> login(String account, String password) async {
     _authStatus = AuthStatus.loading;
     _errorMessage = '';
     notifyListeners();
-
-    await secureStorage.write(key: accessTokenKey, value: '12345678');
+    final res = (await fetchLogin(data: {account: account, password: password})).data;
+    final data = res['data'];
+    await secureStorage.write(key: tokenKey, value: data['token']);
+    await secureStorage.write(key: refreshTokenKey, value: data['refreshToken']);
+    _user = User.fromJson(data);
+    _token = data['token'];
+    _refreshToken = data['refreshToken'];
     _authStatus = AuthStatus.authenticated;
     notifyListeners();
 
@@ -93,7 +100,7 @@ class AuthProvider with ChangeNotifier {
   // 4. 登出方法
   Future<void> logout() async {
     // 清除本地存储的 Token
-    await secureStorage.delete(key: accessTokenKey);
+    await secureStorage.delete(key: tokenKey);
     // 重置本地状态
     _reset();
     notifyListeners();

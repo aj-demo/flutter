@@ -114,22 +114,22 @@ class _LoginScreenState extends State<LoginPage> {
                         }
                       },
                   child: authProvider.authStatus == AuthStatus.loading
-                      ? const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
+                    ? const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
                             ),
-                            SizedBox(width: 10),
-                            Text('登陆中...'),
-                          ],
-                        )
-                      : const Text('登陆'),
+                          ),
+                          SizedBox(width: 10),
+                          Text('登陆中...'),
+                        ],
+                      )
+                    : const Text('登陆'),
                 ),
               ),
               const SizedBox(height: 16),

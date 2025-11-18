@@ -7,14 +7,27 @@
  */
 
 import 'package:dio/dio.dart';
-// import 'package:dio/adapter.dart';
-var baseOptions = BaseOptions(
-  baseUrl: "https://www.jianshu.com",
+import './mock_interceptor.dart';
+import './env.dart';
+
+final mockValue = const String.fromEnvironment("MOCK_ENABLED");
+
+final baseOptions = BaseOptions(
+  baseUrl: apiBaseUrl,
   contentType: Headers.jsonContentType,
   responseType: ResponseType.json,
-  headers: {
-    "Referer": "https://www.jianshu.com"
-  }
+  headers: {},
+  connectTimeout: Duration(seconds: 5),
+  receiveTimeout: Duration(seconds: 10),
 );
+Dio initDio() {
+  final dio = Dio();
+  final mockInterceptor = MockInterceptor();
+  if (mockEnabled.toLowerCase() == 'true') {
+    dio.interceptors.add(mockInterceptor);
+  }
+  return dio;
+}
+final dio =initDio();
 
-final dio = Dio();
+

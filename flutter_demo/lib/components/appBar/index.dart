@@ -33,9 +33,23 @@ class AjAppBarState extends State<AjAppBar> {
         ),
         textAlign: TextAlign.center,
       ),
+      centerTitle: true,
       actions: <Widget> [
-        
+        Icon(Icons.add, color: Colors.black54),
+        Icon(Icons.macro_off, color: Colors.black54),
       ],
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.grey[300]!,
+              Colors.grey[100]!,
+            ],
+          ),
+        ),
+      ),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(20),
         child: Container(

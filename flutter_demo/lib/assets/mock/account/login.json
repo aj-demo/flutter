@@ -1,0 +1,12 @@
+{
+  "code": 0,
+  "msg": null,
+  "data": {
+    "id": "id-1234567890",
+    "displayName": "jade",
+    "avatar": "https://q2.itc.cn/q_70/images03/20250225/e8117dd40aae4db5a64461f1ea0d16fc.jpeg",
+    "email": "apathyjade@outlook.com",
+    "token": "token-1234567890",
+    "refreshToken": "refreshToken-1234567890"
+  }
+}

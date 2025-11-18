@@ -9,7 +9,6 @@ enum TransitionType {
   slideFromBottom, // 从底部滑入 (类似 Android)
 }
 
-
 class CustomPageTransitionsBuilder {
   TransitionType type;
   CustomPageTransitionsBuilder(this.type);
@@ -21,7 +20,7 @@ class CustomPageTransitionsBuilder {
   CustomTransitionPage getPage(BuildContext context, GoRouterState state, Widget child) {
     return CustomTransitionPage(
       key: state.pageKey,
-      child: child,
+      child: MaterialApp(home: child),
       transitionsBuilder: buildTransition,
     );
   }

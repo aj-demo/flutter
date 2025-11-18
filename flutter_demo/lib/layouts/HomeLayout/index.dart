@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'NavigationBar.dart';
+import 'navigation_bar.dart';
 
 class BaseLayout extends StatelessWidget {
   BaseLayout({super.key, required this.navigationShell, required this.children});
