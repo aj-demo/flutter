@@ -40,7 +40,7 @@ class BaseLayout extends HookConsumerWidget {
       backgroundColor: Colors.white,
       body: PageView.builder(
         controller: pageController,
-        physics: ClampingScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(), // ClampingScrollPhysics(),
         onPageChanged:(index) {
           ref.read(globalProvider.notifier).changeBranche(index);
         },

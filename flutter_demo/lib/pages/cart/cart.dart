@@ -34,9 +34,9 @@ class PageCart extends HookConsumerWidget {
           },
           onPageStarted: (String url) {},
           onPageFinished: (String url) {
-            controller.getTitle().then((val) {
-              title.value = val ?? '';
-            });
+            // controller.getTitle().then((val) {
+            //   title.value = val ?? '';
+            // });
           },
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
@@ -62,7 +62,14 @@ class PageCart extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(title.value),
       ),
-      body: WebViewWidget(controller: controller),
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          return true;
+        },
+        child: PageView(
+          children: [WebViewWidget(controller: controller)],
+        ),
+      ),
     );
   }
   void gotoNext (BuildContext context) {

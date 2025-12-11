@@ -57,7 +57,6 @@ final routerProvider = Provider<GoRouter>((ref) {
                   return CustomPageTransitionsBuilder.getTransitionPage(context, state, PageCart());
                 },
                 redirect: (context, state) {
-                  Future.microtask(() => notifier.setUpstairs(Text('data wokaka')));
                   return null;
                 },
               ),
